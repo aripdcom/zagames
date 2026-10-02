@@ -48,12 +48,6 @@ CI'daki `probe` adımı geçme/kalma vermez; amacı **ölçüm koşumlarının
 | Rastgele ellerin çoğu kelime kurar | `DizgiStateTest` |
 | Kolay tahtalar en basit teknikle çözülür | `SudokuStateTest` |
 | Üretim iş bütçesini aşmaz | `KakuroTest` |
-| Her bulmaca tahminsiz çözülür, brif kısa kalır, üretim bütçede | `ReyonGeneratorTest` |
-| Denetim sapmaları ayrık ve görünür; plan ile raf yalnızca sapma gözlerinde ayrışır | `ReyonAuditTest` |
-| Satış hedefi tabanı geçer, geçerli tam doluluktur; iyileştirici bütçede | `ReyonSalesTest` |
-| Sipariş: gerçekleşen talep tahmin aralığında; uzman siparişlerinin tekrar oynanışı hedefi birebir verir; gün kuralları elle izlenen haftayla eşleşir; kayıt tur dönüşü | `ReyonOrderTest` |
-| Reyon blok adları en dar gerçek gözde kırpılmaz (35 ad, TR ve EN; 360 dp telefonda Zor planı, tek yüz) | `ReyonBlockLabelTest` |
-| Denetimde plan ve raf 360×640'ta da aynı genişlikte ve ekran içinde; plan büyütme açılıp kapanır | `ReyonAuditLayoutTest` |
 | Raket: orta bir oyuncu botu kolay bilgisayarı yener, zora yenilir, seviyeler sıralı ve her maç biter; tavan hızda vuruş kaçmaz (tünelleme yok) | `RaketWorldTest` |
 | Tuşe: şerit dizisi tohumdan deterministik, her şerit kullanılır, tekrar payı sınırlı; Sonsuz'da sıradaki karo tamamen çıkana dek vurulabilir; parçalar aralıkta ve oktav sıçramasız; sentez notanın frekansını %3 içinde tutar | `TuseWorldTest` |
 | Uçurtma: üretilen dünya her sütunda ≥ 0,3 birim boşluk bırakır (tavan zorlukta da); rakibin üstünden geçen keser, altından geçen kesilir; dikkatli pilot 12 uçuşun en az 8'inde 300 m'yi geçer | `UcurtmaWorldTest` |
@@ -102,8 +96,8 @@ tek parmakla sınırlı).
 
 ### Her ölçüm hangi yapıda alındığını yazar
 
-`cihaz_testi.py reyon` ve `... tarama` raporun ilk satırına kurulu yapının
-parmak izini basar:
+`cihaz_testi.py tarama` raporun ilk satırına kurulu yapının parmak izini
+basar:
 
 ```
 Ölçülen yapı: com.aripd.zagames 0.43.3 sha256=00bfb833…
@@ -467,6 +461,12 @@ olduğundan fazla gösterir.
 ---
 
 ## Sonuç kütüğü
+
+> **Reyon v0.44.0'da ayrı bir uygulama oldu** ([aripdcom/reyon](https://github.com/aripdcom/reyon)).
+> Aşağıdaki Reyon kütükleri geçmiş kayıttır ve o depoda `docs/cihaz-testi.md` içinde de duruyor.
+> Burada kalmalarının nedeni: TalkBack alt payı (`MainActivity.ExplorationInset`) ve kısa ekranda
+> kayan kart (`OverlayCard`) Reyon'da bulunan ama bütün oyunlara uygulanan düzeltmeler; gerekçeleri
+> bu kütüklerde.
 
 Ölçüm cihazı: SM-A515F (Galaxy A51), Android 13, 1080×2400 @420 dpi, 60 Hz,
 sürüm derlemesi. A: açılış/oynanış/çökme. B: 12 s pencerede kare ölçümü.
@@ -3001,6 +3001,54 @@ kısa ekran tavanlarından gelmiyor; Sipariş'in gün başlığı gibi ayrı bir
 konusu. Kırpılan ad, kaydırmanın son satırı olduğu için gözden kaçabilir.
 
 `logcat AndroidRuntime:E` boş; ekran ayarları geri alındı.
+
+### 411 dp'de `Marka bloğu` neden kırpılıyor · cihazda · 2026-09-21
+
+Önceki koşumda 411 dp'de beşinci kuralın adı iki kez 12,6 dp ölçülmüştü. Bakıldı:
+**tura bağlı değil, tepsinin payına bağlı — ve G4 çalışmasının getirdiği bir
+gerileme değil, tersine v0.43.3 burayı iyileştiriyor.**
+
+Ölçüm cihazın kendi ekranında (411 dp, uygulama alanı 833 dp), iki yapı
+kurularak; ikisinin de `base.apk` özeti yerel APK ile karşılaştırıldı
+(v0.43.3 `sha256=79cbcef9…`, v0.43.2 `sha256=004f628d…`).
+
+| Yapı | Tepsi | Panel görünümü | `Marka bloğu` adı |
+| --- | --- | --- | --- |
+| v0.43.2 | 167,2 dp (iki sıra) | **240,0 dp** | 17,9 dp — beşi de görünüyor |
+| v0.43.2 | 218,7 dp (üç sıra) | 208,0 dp | **5,7 dp** |
+| v0.43.3 | 218,7 dp (üç sıra) | 208,0 dp | **12,6 dp** |
+
+Aynı panel boyunda (208 dp) v0.43.3 beşinci kuralın adından 5,7 → 12,6 dp'ye
+çıkıyor: 1 dp'ye inen satır arası beş kuralda ~7 dp kazandırmış. Yani kırpılma
+düzeltmeden önce de vardı ve daha kötüydü.
+
+**Sebep — panel, tepsiden artanı alıyor.** `ReyonSalesScreen`'de panel ile tepsi
+`BoxWithConstraints`'in içinde aynı kalanı paylaşıyor (411 dp'de 426,7 dp).
+Tepsi ağırlıksız (`heightIn(max = trayH)`), yani **önce** ölçülüyor ve doğal
+boyunu alıyor; panel `weight(1f, fill = false)` ile **artandan** besleniyor.
+`trayHeight(rest) = rest − PANEL_MIN` tavanı 411 dp'de 286,7 dp ediyor, tepsinin
+doğal boyu (218,7 dp) bunun altında kaldığı için tavan hiç bağlamıyor. Sonuç:
+`PANEL_MIN` burada yalnız bir **taban**, "beş kural sığsın" güvencesi değil.
+
+Tepsinin doğal boyu turdan tura değişiyor — ürün adları sarınca iki sıra yerine
+üç sıra oluyor (167,2 ↔ 218,7 dp) — panel de onunla 240 ↔ 208 dp arasında
+gidiyor. Belgede "411 dp'de panel 240 dp ve beş kural da görünüyor" denmesinin
+sebebi bu: o okuma iki sıralık bir tepsiye denk gelmiş. Ürün **sayısı** belirleyici
+değil; altı üründe de üç sıra ölçüldü.
+
+**Ne kadar eksik.** Panel görünümü 208,0 dp, beş kuralın içeriği ~232 dp. Panel
+sonuna kadar kaydırılınca `Marka bloğu` tam çıkıyor (ad 17,9 + gövde 17,9) ve bu
+kez tepedeki `Konum`'un adı 5,3 dp kırpılıyor — yani taşan miktar ~24 dp, bir
+kuralın gövdesi kadar.
+
+**Durum.** Hata değil, paylaşım kuralının sonucu: beş kuralın beşine de panelin
+kendi kaydırmasıyla ulaşılıyor, kısa ekrandakiyle aynı durum. Kapatılacaksa kol
+tepsinin uzun ekrandaki tavanı — ama tepsiyi kısmak kısa ekranda sıra sayısından
+yer götürür (ürün seçilemeyen tepsi bulmacayı çözülemez yapar, `TRAY_MIN`
+bunun için var). Ölçüm bunu çözmez; tavan kararı ister.
+
+> Bu bölümün sorduğu karar verildi: tavan tepsiye kondu ve kalibrasyonsuz
+> hâle getirildi. Sonucu hemen aşağıda; kural v0.43.5'le çıktı.
 
 ### Tepsinin uzun ekrandaki tavanı · denendi, cihazda · 2026-09-21
 
