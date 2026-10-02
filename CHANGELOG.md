@@ -7,6 +7,7 @@ Uygulama içindeki sürüm notlarının (`app/src/main/kotlin/com/aripd/zagames/
 - Reyon'daki ilerleme yeni uygulamaya taşınmıyor: Android iki uygulamanın verisini ayrı tutuyor. Cihazdaki eski `za_reyon` kaydı birkaç KB; silmek için göç kodu eklenmedi.
 - Reyon'da bulunan iki genel düzeltme kalıyor: TalkBack açıkken en alttaki düğmelere inilebilmesi (`ExplorationInset`) ve kısa ekranda kayan menü/bitiş kartları (`OverlayCard`). Gerekçeleri `docs/oyun-testi.md`'deki Reyon kütüklerinde; kütükler geçmiş kayıt olarak duruyor.
 - Raket, Tuşe, Uçurtma ve Dalgıç'ın metinleri kendi bölüm başlığını aldı: 14 dilde de Reyon'un "Satış" başlığının altında duruyorlardı, Reyon'un satırları giderken birlikte gitmemeleri için sınır tek tek doğrulandı.
+- **Vergici: seçili sayının rakamı okunuyor.** Seçili hücrenin sarı zemini %45 saydamlıkla koyu arka plana karışıyor, üstündeki koyu rakam 2,8:1 kontrastta kalıyordu (AA eşiği 4,5:1). Zemin %85'e çıktı (7,7:1), Toplam'daki sahipli pulla aynı doygunluk; `VergiciCellContrastTest` eşiği koruyor (PR #110).
 
 ## 0.43.5 (2026-09-21)
 - **Reyon · Satış: uzun telefonda beş puan kuralının beşi de görünüyor.** 411 dp'de panelin payı tepsiden artana bağlıydı; tepsi ürün adları sarınca iki sıra yerine üç sıra oluyor (167 ↔ 219 dp) ve panel onunla 240 ↔ 208 dp arasında gidip geliyordu. 208 dp'de beşinci kuralın adı kırpılıyordu — düzeltmeden önce de vardı, cihazda ölçüldü
