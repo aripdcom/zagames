@@ -52,7 +52,7 @@ object Changelog {
 
     val entries: List<ReleaseNote> = listOf(
         ReleaseNote(
-            "0.44.0", "2026-09-26",
+            "0.44.0", "2026-10-02",
             tr = listOf(
                 "Reyon artık ayrı bir uygulama: Google Play'de Reyon adıyla, ücretsiz ve yine reklamsız; ZA Games'ten bu sürümle çıktı",
                 "Reyon'daki ilerleme yeni uygulamaya taşınmıyor: Android iki uygulamanın verisini birbirinden ayrı tutuyor",

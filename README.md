@@ -237,7 +237,8 @@ Tüm motorlar deterministiktir: aynı tohumla (seed) başlayan iki oyun, aynı h
   (`games/kakuro`, 8 test)
 
 ### Reyon
-Reyon v0.44.0'da ayrı bir uygulama oldu: motoru, arayüzü, testleri ve cihaz kütükleri
+Reyon v0.44.0'da ayrı bir uygulama oldu: [Google Play'de](https://play.google.com/store/apps/details?id=com.aripd.reyon)
+kendi kaydıyla yayında; motoru, arayüzü, testleri ve cihaz kütükleri
 [aripdcom/reyon](https://github.com/aripdcom/reyon) deposunda. Bu depodaki geçmiş kayıtlar
 (`CHANGELOG.md`, sürüm notları, `docs/oyun-testi.md` kütükleri) olduğu gibi duruyor.
 

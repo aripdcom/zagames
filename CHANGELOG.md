@@ -2,7 +2,7 @@
 
 Uygulama içindeki sürüm notlarının (`app/src/main/kotlin/com/aripd/zagames/platform/Changelog.kt`) depo kopyası. En yeni en üstte.
 
-## 0.44.0 (2026-09-26)
+## 0.44.0 (2026-10-02)
 - **Reyon ayrı bir uygulama oldu** ([aripdcom/reyon](https://github.com/aripdcom/reyon)) ve ZA Games'ten çıktı. Motor (`games/reyon`), 13 arayüz dosyası, 6 test ve 14 dilde 215 metin anahtarı kaldırıldı; ana menüde 26 oyun, Bulmaca grubunda 4 oyun kaldı. Uygulama içi "Yenilikler" kartı kullanıcıya yeni uygulamayı haber veriyor.
 - Reyon'daki ilerleme yeni uygulamaya taşınmıyor: Android iki uygulamanın verisini ayrı tutuyor. Cihazdaki eski `za_reyon` kaydı birkaç KB; silmek için göç kodu eklenmedi.
 - Reyon'da bulunan iki genel düzeltme kalıyor: TalkBack açıkken en alttaki düğmelere inilebilmesi (`ExplorationInset`) ve kısa ekranda kayan menü/bitiş kartları (`OverlayCard`). Gerekçeleri `docs/oyun-testi.md`'deki Reyon kütüklerinde; kütükler geçmiş kayıt olarak duruyor.
