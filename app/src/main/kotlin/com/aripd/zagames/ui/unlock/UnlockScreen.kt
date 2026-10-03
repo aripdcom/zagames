@@ -18,12 +18,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.aripd.zagames.R
 import com.aripd.zagames.platform.GameEntry
 import com.aripd.zagames.platform.Pack
+import com.aripd.zagames.platform.RestoreResult
 import com.aripd.zagames.platform.zaString
 import com.aripd.zagames.ui.common.GameTopBar
 
@@ -40,6 +45,8 @@ fun UnlockScreen(
     onBuy: (productId: String) -> Unit,
     onRestore: () -> Unit,
     onExit: () -> Unit,
+    /** Son geri yüklemenin sonucu; null = henüz denenmedi. */
+    restoreResult: RestoreResult? = null,
 ) {
     val pack = game.pack ?: return
     BackHandler { onExit() }
@@ -54,6 +61,7 @@ fun UnlockScreen(
     ) {
         GameTopBar(title = stringResource(R.string.unlock_title), onExit = onExit)
         LazyColumn(
+            modifier = Modifier.testTag(UNLOCK_LIST_TAG),
             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
@@ -89,10 +97,29 @@ fun UnlockScreen(
                 TextButton(onClick = onRestore) {
                     Text(stringResource(R.string.unlock_restore))
                 }
+                if (restoreResult != null) {
+                    Text(
+                        text = stringResource(
+                            when (restoreResult) {
+                                RestoreResult.FOUND -> R.string.unlock_restore_found
+                                RestoreResult.NONE -> R.string.unlock_restore_none
+                                RestoreResult.UNAVAILABLE -> R.string.unlock_store_unavailable
+                            },
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .semantics { liveRegion = LiveRegionMode.Polite },
+                    )
+                }
             }
         }
     }
 }
+
+/** Testlerin liste düğümünü bulup kaydırması için. */
+const val UNLOCK_LIST_TAG = "unlock_list"
 
 @Composable
 private fun OfferCard(

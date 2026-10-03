@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Tutti i pacchetti e ogni gioco futuro.</string>
     <string name="unlock_restore">Ripristina acquisti</string>
     <string name="unlock_store_unavailable">Store non disponibile</string>
+    <string name="unlock_restore_found">Acquisti ripristinati.</string>
+    <string name="unlock_restore_none">Nessun acquisto trovato per questo account Google.</string>
     <string name="unlock_once_note">Acquisto unico. Niente pubblicità, niente abbonamento.</string>
     <string name="pack_word">Parole</string>
     <string name="pack_puzzle_board">Logica e Tavolo</string>

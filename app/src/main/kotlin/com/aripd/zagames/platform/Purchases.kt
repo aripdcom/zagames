@@ -22,10 +22,25 @@ interface Purchases {
     /** Satın alma akışını başlatır; sonuç [owned] üzerinden gelir. */
     fun buy(activity: Activity, productId: String)
 
-    /** Satın almaları mağazadan yeniden okur (telefon değişince, iadeden sonra). */
-    fun restore()
+    /**
+     * Satın almaları mağazadan yeniden okur (telefon değişince, iadeden sonra).
+     * Sonuç oyuncuya gösterilir; aksi halde düğme sessiz kalıyordu (cihaz testi, PR #116).
+     */
+    fun restore(onResult: (RestoreResult) -> Unit = {})
 
     fun release()
+}
+
+/** Geri yüklemenin oyuncuya söylenen sonucu. */
+enum class RestoreResult {
+    /** Bu Google hesabında en az bir satın alma bulundu. */
+    FOUND,
+
+    /** Mağaza cevap verdi, satın alma yok. */
+    NONE,
+
+    /** Mağazaya ulaşılamadı. */
+    UNAVAILABLE,
 }
 
 /** Kilitsiz dağıtım: her oyun açık, mağazaya hiç bağlanılmaz. */
@@ -34,6 +49,6 @@ object AllUnlocked : Purchases {
     override val owned: StateFlow<Set<String>> = MutableStateFlow(emptySet())
     override val prices: StateFlow<Map<String, String>> = MutableStateFlow(emptyMap())
     override fun buy(activity: Activity, productId: String) = Unit
-    override fun restore() = Unit
+    override fun restore(onResult: (RestoreResult) -> Unit) = Unit
     override fun release() = Unit
 }

@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Все наборы и все будущие игры.</string>
     <string name="unlock_restore">Восстановить покупки</string>
     <string name="unlock_store_unavailable">Магазин недоступен</string>
+    <string name="unlock_restore_found">Покупки восстановлены.</string>
+    <string name="unlock_restore_none">Для этого аккаунта Google покупок не найдено.</string>
     <string name="unlock_once_note">Разовая покупка. Без рекламы и подписки.</string>
     <string name="pack_word">Слова</string>
     <string name="pack_puzzle_board">Логика и настольные</string>

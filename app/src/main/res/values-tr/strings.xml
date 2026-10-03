@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Bütün paketler ve ileride eklenecek her oyun.</string>
     <string name="unlock_restore">Satın almaları geri yükle</string>
     <string name="unlock_store_unavailable">Mağazaya ulaşılamıyor</string>
+    <string name="unlock_restore_found">Satın almalar geri yüklendi.</string>
+    <string name="unlock_restore_none">Bu Google hesabında satın alma bulunamadı.</string>
     <string name="unlock_once_note">Tek seferlik ödeme. Reklam yok, abonelik yok.</string>
     <string name="pack_word">Kelime</string>
     <string name="pack_puzzle_board">Bulmaca ve Masa</string>

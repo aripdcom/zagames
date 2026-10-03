@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Todos os pacotes e cada jogo futuro.</string>
     <string name="unlock_restore">Restaurar compras</string>
     <string name="unlock_store_unavailable">Loja indisponível</string>
+    <string name="unlock_restore_found">Compras restauradas.</string>
+    <string name="unlock_restore_none">Nenhuma compra encontrada nesta conta Google.</string>
     <string name="unlock_once_note">Compra única. Sem anúncios, sem assinatura.</string>
     <string name="pack_word">Palavras</string>
     <string name="pack_puzzle_board">Lógica e Mesa</string>

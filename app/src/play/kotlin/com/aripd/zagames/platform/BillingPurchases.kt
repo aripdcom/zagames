@@ -41,8 +41,11 @@ class BillingPurchases(context: Context) : Purchases, PurchasesUpdatedListener {
     @Volatile
     private var details: Map<String, ProductDetails> = emptyMap()
 
-    /** Bağlantı kurulunca koşacak işler; Billing geri çağrıları ana iş parçacığında gelir. */
-    private val pending = mutableListOf<() -> Unit>()
+    /**
+     * Bağlantı kurulunca koşacak işler ve bağlantı kurulamazsa çağrılacak
+     * karşılıkları; Billing geri çağrıları ana iş parçacığında gelir.
+     */
+    private val pending = mutableListOf<Pair<() -> Unit, () -> Unit>>()
     private var connecting = false
 
     private val client = BillingClient.newBuilder(context.applicationContext)
@@ -73,10 +76,10 @@ class BillingPurchases(context: Context) : Purchases, PurchasesUpdatedListener {
         }
     }
 
-    override fun restore() {
-        whenReady {
+    override fun restore(onResult: (RestoreResult) -> Unit) {
+        whenReady(onFail = { onResult(RestoreResult.UNAVAILABLE) }) {
             if (details.isEmpty()) loadPrices()
-            queryOwned()
+            queryOwned(onResult)
         }
     }
 
@@ -94,12 +97,12 @@ class BillingPurchases(context: Context) : Purchases, PurchasesUpdatedListener {
         }
     }
 
-    private fun whenReady(action: () -> Unit) {
+    private fun whenReady(onFail: () -> Unit = {}, action: () -> Unit) {
         if (client.isReady) {
             action()
             return
         }
-        pending += action
+        pending += action to onFail
         if (connecting) return
         connecting = true
         client.startConnection(object : BillingClientStateListener {
@@ -107,12 +110,19 @@ class BillingPurchases(context: Context) : Purchases, PurchasesUpdatedListener {
                 connecting = false
                 val actions = pending.toList()
                 pending.clear()
-                if (result.responseCode == BillingResponseCode.OK) actions.forEach { it() }
+                if (result.responseCode == BillingResponseCode.OK) {
+                    actions.forEach { (action, _) -> action() }
+                } else {
+                    actions.forEach { (_, onFail) -> onFail() }
+                }
             }
 
             override fun onBillingServiceDisconnected() {
                 // Bir sonraki buy/restore yeniden bağlanır.
                 connecting = false
+                val actions = pending.toList()
+                pending.clear()
+                actions.forEach { (_, onFail) -> onFail() }
             }
         })
     }
@@ -135,11 +145,16 @@ class BillingPurchases(context: Context) : Purchases, PurchasesUpdatedListener {
         }
     }
 
-    private fun queryOwned() {
+    private fun queryOwned(onResult: (RestoreResult) -> Unit = {}) {
         val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.INAPP).build()
         client.queryPurchasesAsync(params) { result, purchases ->
             // Sorgu başarısızsa yerel kayıt korunur: çevrimdışı oyuncu kilitlenmesin.
-            if (result.responseCode == BillingResponseCode.OK) record(purchases, replace = true)
+            if (result.responseCode != BillingResponseCode.OK) {
+                onResult(RestoreResult.UNAVAILABLE)
+                return@queryPurchasesAsync
+            }
+            record(purchases, replace = true)
+            onResult(if (ownedState.value.isEmpty()) RestoreResult.NONE else RestoreResult.FOUND)
         }
     }
 

@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Tous les packs, et chaque jeu à venir.</string>
     <string name="unlock_restore">Restaurer les achats</string>
     <string name="unlock_store_unavailable">Boutique indisponible</string>
+    <string name="unlock_restore_found">Achats restaurés.</string>
+    <string name="unlock_restore_none">Aucun achat trouvé pour ce compte Google.</string>
     <string name="unlock_once_note">Achat unique. Sans pub, sans abonnement.</string>
     <string name="pack_word">Mots</string>
     <string name="pack_puzzle_board">Casse-tête et Plateau</string>

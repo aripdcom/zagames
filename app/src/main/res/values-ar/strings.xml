@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">كل الحزم وكل لعبة تُضاف لاحقًا.</string>
     <string name="unlock_restore">استعادة المشتريات</string>
     <string name="unlock_store_unavailable">المتجر غير متاح</string>
+    <string name="unlock_restore_found">تمت استعادة المشتريات.</string>
+    <string name="unlock_restore_none">لا توجد مشتريات لحساب Google هذا.</string>
     <string name="unlock_once_note">شراء لمرة واحدة. بلا إعلانات وبلا اشتراك.</string>
     <string name="pack_word">كلمات</string>
     <string name="pack_puzzle_board">منطق وألعاب لوحية</string>

@@ -24,6 +24,7 @@ import com.aripd.zagames.platform.GameEntry
 import com.aripd.zagames.platform.GameRegistry
 import com.aripd.zagames.platform.LocalZaHaptics
 import com.aripd.zagames.platform.LocalZaSound
+import com.aripd.zagames.platform.RestoreResult
 import com.aripd.zagames.platform.ScoreStore
 import com.aripd.zagames.platform.SettingsStore
 import com.aripd.zagames.platform.SoundPlayer
@@ -84,6 +85,7 @@ fun ZaApp() {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showLanguage by rememberSaveable { mutableStateOf(false) }
     var unlockGameId by rememberSaveable { mutableStateOf<String?>(null) }
+    var restoreResult by remember { mutableStateOf<RestoreResult?>(null) }
     val unlockGame = GameRegistry.games.firstOrNull { it.id == unlockGameId }
 
     // Kullanıcının açık dil seçimi ve o an çizilen dil. Seçim uygulanınca
@@ -122,6 +124,7 @@ fun ZaApp() {
         val game = unlockGame ?: return@LaunchedEffect
         if (unlocked(game)) {
             unlockGameId = null
+            restoreResult = null
             openGame(game)
         }
     }
@@ -157,8 +160,15 @@ fun ZaApp() {
                 games = GameRegistry.games,
                 prices = prices,
                 onBuy = { productId -> context.findActivity()?.let { purchases.buy(it, productId) } },
-                onRestore = { purchases.restore() },
-                onExit = { unlockGameId = null },
+                onRestore = {
+                    restoreResult = null
+                    purchases.restore { restoreResult = it }
+                },
+                onExit = {
+                    unlockGameId = null
+                    restoreResult = null
+                },
+                restoreResult = restoreResult,
             )
         } else if (currentGame == null) {
             HubScreen(

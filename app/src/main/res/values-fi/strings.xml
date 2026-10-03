@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Kaikki paketit ja jokainen tuleva peli.</string>
     <string name="unlock_restore">Palauta ostot</string>
     <string name="unlock_store_unavailable">Kauppa ei ole käytettävissä</string>
+    <string name="unlock_restore_found">Ostot palautettu.</string>
+    <string name="unlock_restore_none">Tällä Google-tilillä ei ole ostoja.</string>
     <string name="unlock_once_note">Kertaosto. Ei mainoksia, ei tilausta.</string>
     <string name="pack_word">Sanat</string>
     <string name="pack_puzzle_board">Logiikka ja Lautapelit</string>

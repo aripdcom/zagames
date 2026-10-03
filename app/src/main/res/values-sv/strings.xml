@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Alla paket och varje kommande spel.</string>
     <string name="unlock_restore">Återställ köp</string>
     <string name="unlock_store_unavailable">Butiken är inte tillgänglig</string>
+    <string name="unlock_restore_found">Köpen har återställts.</string>
+    <string name="unlock_restore_none">Inga köp hittades för det här Google-kontot.</string>
     <string name="unlock_once_note">Engångsköp. Inga annonser, ingen prenumeration.</string>
     <string name="pack_word">Ord</string>
     <string name="pack_puzzle_board">Logik och Brädspel</string>

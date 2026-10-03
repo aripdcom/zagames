@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Alle Pakete und jedes künftige Spiel.</string>
     <string name="unlock_restore">Käufe wiederherstellen</string>
     <string name="unlock_store_unavailable">Store nicht erreichbar</string>
+    <string name="unlock_restore_found">Käufe wiederhergestellt.</string>
+    <string name="unlock_restore_none">Für dieses Google-Konto wurden keine Käufe gefunden.</string>
     <string name="unlock_once_note">Einmalkauf. Keine Werbung, kein Abo.</string>
     <string name="pack_word">Wort</string>
     <string name="pack_puzzle_board">Rätsel &amp; Brett</string>

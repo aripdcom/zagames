@@ -765,6 +765,8 @@
     <string name="unlock_all_desc">Every pack, plus every game added later.</string>
     <string name="unlock_restore">Restore purchases</string>
     <string name="unlock_store_unavailable">Store unavailable</string>
+    <string name="unlock_restore_found">Purchases restored.</string>
+    <string name="unlock_restore_none">No purchases found for this Google account.</string>
     <string name="unlock_once_note">One-time purchase. No ads, no subscription.</string>
     <string name="pack_word">Word</string>
     <string name="pack_puzzle_board">Puzzle &amp; Board</string>
