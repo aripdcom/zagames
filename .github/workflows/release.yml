@@ -21,6 +21,10 @@ on:
         description: 'Oluşturulacak sürüm etiketi (örn. v0.1.0)'
         required: true
         default: 'v0.1.0'
+      paywall:
+        description: 'Play AAB ücretli katman kilidiyle derlensin (kapalı test için). Açıksa GitHub Release oluşturulmaz, dosyalar yalnız iş akışı çıktısıdır.'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -63,7 +67,7 @@ jobs:
       # APK GitHub'dan indirilir: libre çeşidi (ödeme kodu yok). AAB Play'e
       # yüklenir: play çeşidi. Kilit bayrağı (-PzaPaywall) burada verilmedikçe kapalı.
       - name: İmzalı release APK ve AAB derle
-        run: ./gradlew :app:assembleLibreRelease :app:bundlePlayRelease -PzaVersion=${{ steps.version.outputs.version }}
+        run: ./gradlew :app:assembleLibreRelease :app:bundlePlayRelease -PzaVersion=${{ steps.version.outputs.version }} -PzaPaywall=${{ inputs.paywall == true }}
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/za-release.jks
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -87,7 +91,8 @@ jobs:
           path: dist/*
 
       - name: GitHub Release oluştur
-        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        # Kilitli test derlemesi herkese açık sürüm olmaz: AAB iş akışı çıktısından indirilip Play'in kapalı test kanalına yüklenir.
+        if: (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch') && inputs.paywall != true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.tag }}

@@ -112,10 +112,33 @@ kendi paketine girer; "Tümü" sahibi gelecekteki oyunları da alır.
 | [x] | Play Billing entegrasyonu hazır ama kapalı (`-PzaPaywall=true` ile açılır) | A |
 | [ ] | Ödeme profili ve satıcı hesabı (madde 1) | C |
 | [ ] | Console → Para kazanma → Uygulama içi ürünler: yukarıdaki 5 kimliği tek seferlik ürün olarak oluştur, fiyatları gir, etkinleştir | C |
-| [ ] | Lisans testçisi ekle; kapalı test kanalında `-PzaPaywall=true` derlemesiyle satın al, iade et, geri yükle | C + A |
+| [ ] | Lisans testçisi ekle; kapalı test kanalında kilitli derlemeyle satın al, iade et, geri yükle (adımlar aşağıda) | C + A |
 | [ ] | Play çeşidinde manifest `com.android.vending.BILLING` iznini taşır (kullanıcıya sorulmaz): "0 izin" ve "0 satın alma" yazan her yer güncellenmeli (uygulama içi çip, README, site, 14 dilde listeleme, gizlilik sayfası) | A |
 | [ ] | IARC "Dijital satın alma: Evet", listeleme "Uygulama içi satın alma içerir" (`icerik-derecelendirme.md`, `data-safety.md`) | C |
 | [ ] | Vitals temiz ve testçi geri bildirimi kapandıysa **1.0** | C karar |
+
+### Kilitli derlemeyi kapalı testte denemek
+
+1. **Ödeme profili:** Play Console → Ayarlar → Ödeme profili. Satıcı hesabı
+   olmadan ürün oluşturulamaz.
+2. **Ürünler Play'e bir derleme yüklendikten sonra açılır:** Console, uygulama
+   içi ürün sayfasını ancak Billing kütüphanesi içeren bir AAB yüklenince
+   etkinleştirir. Bu yüzden önce kilitli AAB'yi kapalı test kanalına yükle.
+3. **Kilitli AAB:** GitHub → Actions → Release → Run workflow; `tag_name`
+   olarak bir sonraki sürümü (ör. `v0.45.0`), **paywall** kutusunu işaretle.
+   Bu çalışma GitHub Release oluşturmaz; `za-<etiket>-play.aab` dosyası
+   çalışmanın çıktılarından (Artifacts) indirilir.
+4. **Kapalı test kanalı:** Test ve yayın → Kapalı test → yeni sürüm → AAB'yi
+   yükle, testçi listesine kendi Google hesabını ekle, katılma bağlantısından
+   uygulamayı Play üzerinden kur (yandan kurulan APK faturalamaya bağlanmaz).
+5. **Ürünler:** Para kazanma → Ürünler → Uygulama içi ürünler: yukarıdaki
+   tablodaki 5 kimliği aynen gir, fiyatı USD ver ("Fiyatları dönüştür" yerel
+   fiyatları üretir), her birini **Etkin** yap.
+6. **Lisans testçisi:** Ayarlar → Lisans testi → kendi hesabın. Testçi
+   satın almaları gerçek ücret çekmez; "Test kartı, her zaman onaylanır" seçilir.
+7. **Denenecekler:** paket satın al (oyunlar açılmalı, oyun doğrudan başlamalı),
+   "Tümü" satın al, uygulamayı sil ve yeniden kur → "Satın almaları geri yükle",
+   Console'dan iade et → yeniden açılışta kilit geri gelmeli.
 
 > Ücretli katman notu: kaynak GPL-3.0. Satış hukuken mümkün, ama alan herkes
 > derleyip dağıtabilir; pratik koruma "ZA Games" markası, Play'in kolaylığı ve
