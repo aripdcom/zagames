@@ -12,7 +12,7 @@ Ana menüde oyunlar gruplara ayrılır (Kelime, Bulmaca, Arcade, Masa; süzgeç 
 | --- | --- |
 | 0 reklam | Hiçbir reklam SDK'sı yok |
 | 0 izleyici | Analitik/izleme kütüphanesi yok |
-| 0 izin | `AndroidManifest.xml` tek bir `uses-permission` içermez |
+| 0 izin | `AndroidManifest.xml` tek bir `uses-permission` içermez; birleştirilmiş manifestteki tek kayıt androidx.core'un uygulamanın kendine tanımladığı imza izni (`DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`), kullanıcıya gösterilmez ve yetki istemez. Bu söz libre dağıtım içindir; play dağıtımının Billing'den gelen izinleri için bkz. `store/checklist.md` §8 |
 | 0 satın alma | Ödeme/abonelik kodu yok |
 | Saf oyun | Skorlar yalnızca cihazda saklanır |
 | 14 dil | Türkçe, İngilizce, Almanca, Fransızca, Hollandaca, İspanyolca, Portekizce, İtalyanca, Danca, İsveççe, Norveççe, Fince, Rusça, Arapça — arayüz **ve** kelime oyunlarının sözlükleri; telefonun diline uyar, ayrıca elle seçilir (bkz. [Diller](#diller)) |

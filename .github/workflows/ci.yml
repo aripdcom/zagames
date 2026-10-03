@@ -92,6 +92,32 @@ jobs:
       - name: Debug APK derle (play + libre)
         run: ./gradlew :app:assemblePlayDebug :app:assembleLibreDebug
 
+      # İzin sözü: libre hiçbir sistem izni istemez; play yalnız Play faturalama
+      # iznini ekler. Bağımlılık güncellemesi yeni bir izin getirirse burada kırılır.
+      - name: Birleştirilmiş manifest izin denetimi
+        run: |
+          python3 - <<'EOF'
+          import glob, re, sys
+          allowed = {
+              'libreDebug': set(),
+              'playDebug': {'com.android.vending.BILLING'},
+          }
+          bad = False
+          for variant, extra in allowed.items():
+              paths = glob.glob(f'app/build/intermediates/merged_manifests/{variant}/**/AndroidManifest.xml', recursive=True) \
+                  or glob.glob(f'app/build/intermediates/merged_manifest/{variant}/**/AndroidManifest.xml', recursive=True)
+              if not paths:
+                  print(f'::error::{variant} birleştirilmiş manifest bulunamadı'); bad = True; continue
+              perms = set(re.findall(r'<uses-permission[^>]*android:name="([^"]+)"', open(paths[0]).read()))
+              # androidx.core'un uygulamaya kendi tanımladığı imza izni; kullanıcıya gösterilmez.
+              perms = {p for p in perms if not p.endswith('.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION')}
+              unexpected = perms - extra
+              print(variant, sorted(perms))
+              if unexpected:
+                  print(f'::error::{variant} beklenmeyen izin: {sorted(unexpected)}'); bad = True
+          sys.exit(1 if bad else 0)
+          EOF
+
       - name: APK'yı yükle
         uses: actions/upload-artifact@v4
         with:
