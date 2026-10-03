@@ -756,4 +756,20 @@
     <string name="cici_hit_cat">Katze!</string>
     <string name="cici_hit_ball">Roter Ball!</string>
     <string name="cici_board_desc_fmt">All: Punkte %1$d, Leben %2$d, %3$d Leckerbissen</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Freischalten</string>
+    <string name="unlock_title">Spiele freischalten</string>
+    <string name="unlock_in_pack_fmt">%1$s gehört zum Paket %2$s.</string>
+    <string name="unlock_all">Alle Spiele</string>
+    <string name="unlock_all_desc">Alle Pakete und jedes künftige Spiel.</string>
+    <string name="unlock_restore">Käufe wiederherstellen</string>
+    <string name="unlock_store_unavailable">Store nicht erreichbar</string>
+    <string name="unlock_restore_found">Käufe wiederhergestellt.</string>
+    <string name="unlock_restore_none">Für dieses Google-Konto wurden keine Käufe gefunden.</string>
+    <string name="unlock_once_note">Einmalkauf. Keine Werbung, kein Abo.</string>
+    <string name="pack_word">Wort</string>
+    <string name="pack_puzzle_board">Rätsel &amp; Brett</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Abenteuer</string>
 </resources>

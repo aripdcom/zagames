@@ -80,6 +80,8 @@ fun HubScreen(
     onDismissWhatsNew: () -> Unit = {},
     /** Bu sürüm kodundan sonra eklenen oyunlar "Yeni" rozeti alır. */
     newSinceCode: Int = Int.MAX_VALUE,
+    /** Oyun oynanabilir mi; false ise kart kilitli çizilir, dokununca yine [onPlay] çağrılır. */
+    isUnlocked: (GameEntry) -> Boolean = { true },
 ) {
     // Liste sırası kayıt sırasıdır (kararlı); hızlı erişim için ayrı bir "son oynananlar" şeridi var.
     val visible = if (category == null) games else games.filter { it.category == category }
@@ -109,6 +111,7 @@ fun HubScreen(
                 game = game,
                 highScore = highScores[game.id] ?: 0L,
                 isNew = Changelog.versionCode(game.since) > newSinceCode,
+                locked = !isUnlocked(game),
                 onPlay = { onPlay(game) },
             )
         }
@@ -354,7 +357,7 @@ private fun ZeroChip(label: String) {
 }
 
 @Composable
-private fun GameCard(game: GameEntry, highScore: Long, isNew: Boolean, onPlay: () -> Unit) {
+private fun GameCard(game: GameEntry, highScore: Long, isNew: Boolean, locked: Boolean, onPlay: () -> Unit) {
     Surface(
         onClick = onPlay,
         shape = RoundedCornerShape(24.dp),
@@ -410,12 +413,16 @@ private fun GameCard(game: GameEntry, highScore: Long, isNew: Boolean, onPlay: (
                         )
                     }
                 }
-                Surface(shape = CircleShape, color = game.accent) {
+                // Kilitli kartta düğme sönük ve kilitli; dokunuş açma ekranına gider.
+                Surface(
+                    shape = CircleShape,
+                    color = if (locked) MaterialTheme.colorScheme.surfaceVariant else game.accent,
+                ) {
                     Text(
-                        text = stringResource(R.string.play),
+                        text = if (locked) "🔒 " + stringResource(R.string.unlock) else stringResource(R.string.play),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF06121D),
+                        color = if (locked) MaterialTheme.colorScheme.onSurfaceVariant else Color(0xFF06121D),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }

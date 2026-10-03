@@ -756,4 +756,20 @@
     <string name="cici_hit_cat">Gatto!</string>
     <string name="cici_hit_ball">Palla rossa!</string>
     <string name="cici_board_desc_fmt">Spazio: punti %1$d, vite %2$d, %3$d bocconcini</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Sblocca</string>
+    <string name="unlock_title">Sblocca i giochi</string>
+    <string name="unlock_in_pack_fmt">%1$s fa parte del pacchetto %2$s.</string>
+    <string name="unlock_all">Tutti i giochi</string>
+    <string name="unlock_all_desc">Tutti i pacchetti e ogni gioco futuro.</string>
+    <string name="unlock_restore">Ripristina acquisti</string>
+    <string name="unlock_store_unavailable">Store non disponibile</string>
+    <string name="unlock_restore_found">Acquisti ripristinati.</string>
+    <string name="unlock_restore_none">Nessun acquisto trovato per questo account Google.</string>
+    <string name="unlock_once_note">Acquisto unico. Niente pubblicità, niente abbonamento.</string>
+    <string name="pack_word">Parole</string>
+    <string name="pack_puzzle_board">Logica e Tavolo</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Avventura</string>
 </resources>

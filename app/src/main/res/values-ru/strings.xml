@@ -756,4 +756,20 @@
     <string name="cici_hit_cat">Кот!</string>
     <string name="cici_hit_ball">Красный мяч!</string>
     <string name="cici_board_desc_fmt">Космос: очки %1$d, жизни %2$d, %3$d угощений</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Открыть</string>
+    <string name="unlock_title">Открыть игры</string>
+    <string name="unlock_in_pack_fmt">%1$s входит в набор «%2$s».</string>
+    <string name="unlock_all">Все игры</string>
+    <string name="unlock_all_desc">Все наборы и все будущие игры.</string>
+    <string name="unlock_restore">Восстановить покупки</string>
+    <string name="unlock_store_unavailable">Магазин недоступен</string>
+    <string name="unlock_restore_found">Покупки восстановлены.</string>
+    <string name="unlock_restore_none">Для этого аккаунта Google покупок не найдено.</string>
+    <string name="unlock_once_note">Разовая покупка. Без рекламы и подписки.</string>
+    <string name="pack_word">Слова</string>
+    <string name="pack_puzzle_board">Логика и настольные</string>
+    <string name="pack_arcade">Аркада</string>
+    <string name="pack_adventure">Приключения</string>
 </resources>

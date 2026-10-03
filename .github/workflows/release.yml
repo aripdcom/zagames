@@ -42,7 +42,7 @@ jobs:
         run: ./gradlew :games:engineTests
 
       - name: Arayüz testleri (Robolectric + Compose)
-        run: ./gradlew :app:testDebugUnitTest
+        run: ./gradlew :app:testPlayDebugUnitTest
 
       - name: Sürümü etiketten türet
         id: version
@@ -60,8 +60,10 @@ jobs:
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
+      # APK GitHub'dan indirilir: libre çeşidi (ödeme kodu yok). AAB Play'e
+      # yüklenir: play çeşidi. Kilit bayrağı (-PzaPaywall) burada verilmedikçe kapalı.
       - name: İmzalı release APK ve AAB derle
-        run: ./gradlew :app:assembleRelease :app:bundleRelease -PzaVersion=${{ steps.version.outputs.version }}
+        run: ./gradlew :app:assembleLibreRelease :app:bundlePlayRelease -PzaVersion=${{ steps.version.outputs.version }}
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/za-release.jks
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -70,10 +72,10 @@ jobs:
         run: |
           TAG="${{ steps.version.outputs.tag }}"
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/za-$TAG.apk"
-          cp app/build/outputs/apk/release/app-release.apk dist/za.apk
+          cp app/build/outputs/apk/libre/release/app-libre-release.apk "dist/za-$TAG.apk"
+          cp app/build/outputs/apk/libre/release/app-libre-release.apk dist/za.apk
           # Play Console'a yüklenen paket; yandan kurulamaz, APK onun için.
-          cp app/build/outputs/bundle/release/app-release.aab "dist/za-$TAG-play.aab"
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab "dist/za-$TAG-play.aab"
           git archive --format=zip --prefix="za-$TAG/" -o "dist/za-$TAG-source.zip" HEAD
           git archive --format=tar.gz --prefix="za-$TAG/" -o "dist/za-$TAG-source.tar.gz" HEAD
           cd dist && sha256sum za* > SHA256SUMS.txt && cat SHA256SUMS.txt

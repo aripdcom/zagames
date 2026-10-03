@@ -92,13 +92,30 @@ asistan (depo, metin, görsel üretimi).
 
 ## 8. 1.0 ve ücretli katman (henüz açılmayacak)
 
+Karar (2026-10-03, Cem): 6 oyun ücretsiz, geri kalanı 4 paket ve bir "Tümü"
+ürünüyle tek seferlik satın alma. Abonelik, jeton ve reklam yok. Yeni oyun
+kendi paketine girer; "Tümü" sahibi gelecekteki oyunları da alır.
+
+| Ürün kimliği | Paket | Oyunlar | Fiyat (USD) |
+| --- | --- | --- | --- |
+| — | Ücretsiz | Blok, Yılan, 2048, Mayın Tarlası, Beş Harf, Vergici | 0 |
+| `pack_word` | Kelime | Kıskaç, Türetme, Dizgi | 1,99 |
+| `pack_puzzle_board` | Bulmaca ve Masa | Sudoku, Kakuro, Tavla, Toplam Kapma | 1,99 |
+| `pack_arcade` | Arcade | Kuyu, Geçit, Balkon, Viraj, Filo, Raket, Tuşe | 1,99 |
+| `pack_adventure` | Macera | Uçurtma, Dalgıç, Bostan, Sincap, Çekirge, Cici | 1,49 |
+| `pack_all` | Tümü | Hepsi ve ileride eklenecekler | 3,99 |
+
 | | Madde | Sahip |
 | --- | --- | --- |
-| [ ] | Kodda `play`/`libre` ayrımı: aynı kaynaktan iki dağıtım, tek yapı akışı | A |
-| [ ] | Kilit arayüzü: kilitli oyun kartı, açma ekranı, geri yükleme | A |
-| [ ] | Play Billing entegrasyonu hazır ama kapalı (bayrakla) | A |
+| [x] | Kodda `play`/`libre` ayrımı: aynı kaynaktan iki dağıtım, tek yapı akışı | A |
+| [x] | Kilit arayüzü: kilitli oyun kartı, açma ekranı, geri yükleme | A |
+| [x] | Play Billing entegrasyonu hazır ama kapalı (`-PzaPaywall=true` ile açılır) | A |
+| [ ] | Ödeme profili ve satıcı hesabı (madde 1) | C |
+| [ ] | Console → Para kazanma → Uygulama içi ürünler: yukarıdaki 5 kimliği tek seferlik ürün olarak oluştur, fiyatları gir, etkinleştir | C |
+| [ ] | Lisans testçisi ekle; kapalı test kanalında `-PzaPaywall=true` derlemesiyle satın al, iade et, geri yükle | C + A |
+| [ ] | Play çeşidinde manifest `com.android.vending.BILLING` iznini taşır (kullanıcıya sorulmaz): "0 izin" ve "0 satın alma" yazan her yer güncellenmeli (uygulama içi çip, README, site, 14 dilde listeleme, gizlilik sayfası) | A |
+| [ ] | IARC "Dijital satın alma: Evet", listeleme "Uygulama içi satın alma içerir" (`icerik-derecelendirme.md`, `data-safety.md`) | C |
 | [ ] | Vitals temiz ve testçi geri bildirimi kapandıysa **1.0** | C karar |
-| [ ] | Fiyat ile derinliği eşle: Tavla, Kakuro, Kuyu, Dizgi ve Türkçe kelime oyunları tek başına 1 USD'yi hak eder; Vergici, Toplam Kapma, Yılan ve 2048 paket olmalı | C karar |
 
 > Ücretli katman notu: kaynak GPL-3.0. Satış hukuken mümkün, ama alan herkes
 > derleyip dağıtabilir; pratik koruma "ZA Games" markası, Play'in kolaylığı ve
@@ -113,7 +130,7 @@ ve otomatikleşmez — emülatörün kare süreleri ve dokunma ölçeği gerçe�
 temsil etmez.
 
 - [ ] Sürüm derlemesini gerçek cihaza kur (hata ayıklama derlemesiyle ölçme):
-      `./gradlew :app:assembleRelease` → `apksigner sign` → `adb install -r`
+      `./gradlew :app:assemblePlayRelease` → `apksigner sign` → `adb install -r`
 - [ ] **A · koşum:** `python3 tools/cihaz_testi.py tarama` — 26 oyun açılıyor,
       oynanıyor, `logcat` temiz
 - [ ] **B · kare hızı:** sürekli çizen oyunlarda (Yılan, Kuyu, Geçit, Balkon,

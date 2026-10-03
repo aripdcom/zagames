@@ -1,11 +1,16 @@
 package com.aripd.zagames
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import com.aripd.zagames.ui.common.LocalWordLang
 import com.aripd.zagames.ui.common.rememberWordLang
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -15,18 +20,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.aripd.zagames.platform.Changelog
+import com.aripd.zagames.platform.GameEntry
 import com.aripd.zagames.platform.GameRegistry
 import com.aripd.zagames.platform.LocalZaHaptics
 import com.aripd.zagames.platform.LocalZaSound
+import com.aripd.zagames.platform.RestoreResult
 import com.aripd.zagames.platform.ScoreStore
 import com.aripd.zagames.platform.SettingsStore
 import com.aripd.zagames.platform.SoundPlayer
 import com.aripd.zagames.platform.ZaLocale
 import com.aripd.zagames.platform.appLocale
+import com.aripd.zagames.platform.createPurchases
+import com.aripd.zagames.platform.isUnlocked
 import com.aripd.zagames.platform.gatedBy
 import com.aripd.zagames.ui.about.AboutScreen
 import com.aripd.zagames.ui.hub.HubScreen
 import com.aripd.zagames.ui.hub.LanguageScreen
+import com.aripd.zagames.ui.unlock.UnlockScreen
 
 /**
  * Uygulama kökü: ana menü ile oyunlar arasında geçişi, rekor akışını ve
@@ -55,6 +65,17 @@ fun ZaApp() {
         onDispose { soundPlayer.release() }
     }
 
+    // Ücretli katman: libre çeşidinde ve bayrak kapalıyken her oyun açık.
+    val purchases = remember { createPurchases(context) }
+    DisposableEffect(purchases) {
+        onDispose { purchases.release() }
+    }
+    val owned by purchases.owned.collectAsState()
+    val prices by purchases.prices.collectAsState()
+    val unlocked: (GameEntry) -> Boolean = { game ->
+        !purchases.enabled || game.isUnlocked(owned)
+    }
+
     var hapticsOn by remember { mutableStateOf(settings.hapticsEnabled) }
     val systemHaptics = LocalHapticFeedback.current
     val gatedHaptics = remember(systemHaptics) { systemHaptics.gatedBy { hapticsOn } }
@@ -63,6 +84,9 @@ fun ZaApp() {
     val currentGame = GameRegistry.games.firstOrNull { it.id == currentGameId }
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showLanguage by rememberSaveable { mutableStateOf(false) }
+    var unlockGameId by rememberSaveable { mutableStateOf<String?>(null) }
+    var restoreResult by remember { mutableStateOf<RestoreResult?>(null) }
+    val unlockGame = GameRegistry.games.firstOrNull { it.id == unlockGameId }
 
     // Kullanıcının açık dil seçimi ve o an çizilen dil. Seçim uygulanınca
     // etkinlik yeniden oluşur, ikisi de yeni değerle okunur.
@@ -87,6 +111,23 @@ fun ZaApp() {
     var showWhatsNew by rememberSaveable { mutableStateOf(updatedFrom != null) }
 
     BackHandler(enabled = currentGame != null) { currentGameId = null }
+
+    fun openGame(game: GameEntry) {
+        val now = System.currentTimeMillis()
+        settings.recordPlay(game.id, now)
+        lastPlayed[game.id] = now
+        currentGameId = game.id
+    }
+
+    // Satın alma tamamlanınca açma ekranı kapanır ve oyun doğrudan başlar.
+    LaunchedEffect(owned, unlockGameId) {
+        val game = unlockGame ?: return@LaunchedEffect
+        if (unlocked(game)) {
+            unlockGameId = null
+            restoreResult = null
+            openGame(game)
+        }
+    }
 
     // Kelime oyunlarının dili: ekranın derinlerinde klavye sırası, harf büyütme
     // ve taş etiketleri için gerekiyor, tek yerden sağlanır. Oyuncunun seçimi
@@ -113,6 +154,22 @@ fun ZaApp() {
                 },
                 onExit = { showLanguage = false },
             )
+        } else if (currentGame == null && unlockGame != null) {
+            UnlockScreen(
+                game = unlockGame,
+                games = GameRegistry.games,
+                prices = prices,
+                onBuy = { productId -> context.findActivity()?.let { purchases.buy(it, productId) } },
+                onRestore = {
+                    restoreResult = null
+                    purchases.restore { restoreResult = it }
+                },
+                onExit = {
+                    unlockGameId = null
+                    restoreResult = null
+                },
+                restoreResult = restoreResult,
+            )
         } else if (currentGame == null) {
             HubScreen(
                 games = GameRegistry.games,
@@ -124,11 +181,13 @@ fun ZaApp() {
                     settings.hubCategory = picked
                 },
                 onPlay = { game ->
-                    val now = System.currentTimeMillis()
-                    settings.recordPlay(game.id, now)
-                    lastPlayed[game.id] = now
-                    currentGameId = game.id
+                    if (unlocked(game)) {
+                        openGame(game)
+                    } else {
+                        unlockGameId = game.id
+                    }
                 },
+                isUnlocked = unlocked,
                 soundOn = soundOn,
                 onToggleSound = {
                     soundOn = !soundOn
@@ -162,4 +221,11 @@ fun ZaApp() {
             )
         }
     }
+}
+
+/** Satın alma akışı Activity ister; Compose bağlamı onu sarmalayabilir. */
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

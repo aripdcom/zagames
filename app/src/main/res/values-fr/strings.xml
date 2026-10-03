@@ -756,4 +756,20 @@
     <string name="cici_hit_cat">Chat !</string>
     <string name="cici_hit_ball">Balle rouge !</string>
     <string name="cici_board_desc_fmt">Espace : score %1$d, vies %2$d, %3$d gourmandises</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Débloquer</string>
+    <string name="unlock_title">Débloquer des jeux</string>
+    <string name="unlock_in_pack_fmt">%1$s fait partie du pack %2$s.</string>
+    <string name="unlock_all">Tous les jeux</string>
+    <string name="unlock_all_desc">Tous les packs, et chaque jeu à venir.</string>
+    <string name="unlock_restore">Restaurer les achats</string>
+    <string name="unlock_store_unavailable">Boutique indisponible</string>
+    <string name="unlock_restore_found">Achats restaurés.</string>
+    <string name="unlock_restore_none">Aucun achat trouvé pour ce compte Google.</string>
+    <string name="unlock_once_note">Achat unique. Sans pub, sans abonnement.</string>
+    <string name="pack_word">Mots</string>
+    <string name="pack_puzzle_board">Casse-tête et Plateau</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Aventure</string>
 </resources>

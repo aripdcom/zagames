@@ -756,4 +756,20 @@
     <string name="cici_hit_cat">Katt!</string>
     <string name="cici_hit_ball">Röd boll!</string>
     <string name="cici_board_desc_fmt">Rymd: poäng %1$d, liv %2$d, %3$d godbitar</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Lås upp</string>
+    <string name="unlock_title">Lås upp spel</string>
+    <string name="unlock_in_pack_fmt">%1$s ingår i paketet %2$s.</string>
+    <string name="unlock_all">Alla spel</string>
+    <string name="unlock_all_desc">Alla paket och varje kommande spel.</string>
+    <string name="unlock_restore">Återställ köp</string>
+    <string name="unlock_store_unavailable">Butiken är inte tillgänglig</string>
+    <string name="unlock_restore_found">Köpen har återställts.</string>
+    <string name="unlock_restore_none">Inga köp hittades för det här Google-kontot.</string>
+    <string name="unlock_once_note">Engångsköp. Inga annonser, ingen prenumeration.</string>
+    <string name="pack_word">Ord</string>
+    <string name="pack_puzzle_board">Logik och Brädspel</string>
+    <string name="pack_arcade">Arkad</string>
+    <string name="pack_adventure">Äventyr</string>
 </resources>
