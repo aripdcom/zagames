@@ -206,10 +206,10 @@ python3 tools/cihaz_testi.py fazlar
 Sürüm derlemesini cihaza atmak için (CI imzası olmadan):
 
 ```bash
-ANDROID_HOME=$HOME/Android/Sdk ./gradlew :app:assembleRelease
+ANDROID_HOME=$HOME/Android/Sdk ./gradlew :app:assemblePlayRelease
 ~/Android/Sdk/build-tools/35.0.0/apksigner sign \
   --ks ~/.android/debug.keystore --ks-pass pass:android --key-pass pass:android \
-  --out /tmp/za-release.apk app/build/outputs/apk/release/app-release-unsigned.apk
+  --out /tmp/za-release.apk app/build/outputs/apk/play/release/app-play-release-unsigned.apk
 adb install -r /tmp/za-release.apk
 ```
 

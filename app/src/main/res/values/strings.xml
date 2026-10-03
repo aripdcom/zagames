@@ -756,4 +756,18 @@
     <string name="cici_hit_cat">Cat!</string>
     <string name="cici_hit_ball">Red ball!</string>
     <string name="cici_board_desc_fmt">Space: score %1$d, lives %2$d, %3$d treats</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Unlock</string>
+    <string name="unlock_title">Unlock games</string>
+    <string name="unlock_in_pack_fmt">%1$s is part of the %2$s pack.</string>
+    <string name="unlock_all">All games</string>
+    <string name="unlock_all_desc">Every pack, plus every game added later.</string>
+    <string name="unlock_restore">Restore purchases</string>
+    <string name="unlock_store_unavailable">Store unavailable</string>
+    <string name="unlock_once_note">One-time purchase. No ads, no subscription.</string>
+    <string name="pack_word">Word</string>
+    <string name="pack_puzzle_board">Puzzle &amp; Board</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Adventure</string>
 </resources>

@@ -104,6 +104,7 @@ object GameRegistry {
             titleRes = R.string.game_sudoku,
             taglineRes = R.string.game_sudoku_tagline,
             category = GameCategory.PUZZLE,
+            pack = Pack.PUZZLE_BOARD,
             accent = Color(0xFF60A5FA),
             art = { modifier -> SudokuArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -128,6 +129,7 @@ object GameRegistry {
             titleRes = R.string.game_kiskac,
             taglineRes = R.string.game_kiskac_tagline,
             category = GameCategory.WORD,
+            pack = Pack.WORD,
             accent = Color(0xFFF472B6),
             art = { modifier -> KiskacArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -152,6 +154,7 @@ object GameRegistry {
             titleRes = R.string.game_turetme,
             taglineRes = R.string.game_turetme_tagline,
             category = GameCategory.WORD,
+            pack = Pack.WORD,
             accent = Color(0xFFA78BFA),
             art = { modifier -> TuretmeArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -164,6 +167,7 @@ object GameRegistry {
             titleRes = R.string.game_dizgi,
             taglineRes = R.string.game_dizgi_tagline,
             category = GameCategory.WORD,
+            pack = Pack.WORD,
             accent = Color(0xFFFB923C),
             art = { modifier -> DizgiArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -176,6 +180,7 @@ object GameRegistry {
             titleRes = R.string.game_kuyu,
             taglineRes = R.string.game_kuyu_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFFF1F5F9),
             art = { modifier -> KuyuArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -188,6 +193,7 @@ object GameRegistry {
             titleRes = R.string.game_gecit,
             taglineRes = R.string.game_gecit_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFFA3E635),
             art = { modifier -> GecitArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -200,6 +206,7 @@ object GameRegistry {
             titleRes = R.string.game_tavla,
             taglineRes = R.string.game_tavla_tagline,
             category = GameCategory.BOARD,
+            pack = Pack.PUZZLE_BOARD,
             accent = Color(0xFFD97706),
             art = { modifier -> TavlaArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -212,6 +219,7 @@ object GameRegistry {
             titleRes = R.string.game_balkon,
             taglineRes = R.string.game_balkon_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFF38BDF8),
             art = { modifier -> BalkonArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -224,6 +232,7 @@ object GameRegistry {
             titleRes = R.string.game_kakuro,
             taglineRes = R.string.game_kakuro_tagline,
             category = GameCategory.PUZZLE,
+            pack = Pack.PUZZLE_BOARD,
             accent = Color(0xFF14B8A6),
             art = { modifier -> KakuroArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -248,6 +257,7 @@ object GameRegistry {
             titleRes = R.string.game_toplam,
             taglineRes = R.string.game_toplam_tagline,
             category = GameCategory.BOARD,
+            pack = Pack.PUZZLE_BOARD,
             accent = Color(0xFFC084FC),
             art = { modifier -> ToplamArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -260,6 +270,7 @@ object GameRegistry {
             titleRes = R.string.game_viraj,
             taglineRes = R.string.game_viraj_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFF4DE1FF),
             art = { modifier -> VirajArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -272,6 +283,7 @@ object GameRegistry {
             titleRes = R.string.game_filo,
             taglineRes = R.string.game_filo_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFFFB7185),
             art = { modifier -> FiloArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -284,6 +296,7 @@ object GameRegistry {
             titleRes = R.string.game_raket,
             taglineRes = R.string.game_raket_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFF5EEAD4),
             art = { modifier -> RaketArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -296,6 +309,7 @@ object GameRegistry {
             titleRes = R.string.game_tuse,
             taglineRes = R.string.game_tuse_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ARCADE,
             accent = Color(0xFFE879F9),
             art = { modifier -> TuseArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -308,6 +322,7 @@ object GameRegistry {
             titleRes = R.string.game_ucurtma,
             taglineRes = R.string.game_ucurtma_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFF60B8F5),
             art = { modifier -> UcurtmaArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -320,6 +335,7 @@ object GameRegistry {
             titleRes = R.string.game_dalgic,
             taglineRes = R.string.game_dalgic_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFFFACC15),
             art = { modifier -> DalgicArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -332,6 +348,7 @@ object GameRegistry {
             titleRes = R.string.game_bostan,
             taglineRes = R.string.game_bostan_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFF84CC16),
             art = { modifier -> BostanArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -344,6 +361,7 @@ object GameRegistry {
             titleRes = R.string.game_sincap,
             taglineRes = R.string.game_sincap_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFFD97706),
             art = { modifier -> SincapArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -356,6 +374,7 @@ object GameRegistry {
             titleRes = R.string.game_cekirge,
             taglineRes = R.string.game_cekirge_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFF65A30D),
             art = { modifier -> CekirgeArt(modifier) },
             screen = { highScore, onScore, onExit ->
@@ -368,6 +387,7 @@ object GameRegistry {
             titleRes = R.string.game_cici,
             taglineRes = R.string.game_cici_tagline,
             category = GameCategory.ARCADE,
+            pack = Pack.ADVENTURE,
             accent = Color(0xFF818CF8),
             art = { modifier -> CiciArt(modifier) },
             screen = { highScore, onScore, onExit ->

@@ -452,18 +452,23 @@ kullanıcıya İngilizce açılırdı.
 
 ## Derleme
 
-Arayüz testleri JVM'de koşar, emülatör gerekmez: `./gradlew :app:testDebugUnitTest` (Robolectric + Compose test kuralı;
+Arayüz testleri JVM'de koşar, emülatör gerekmez: `./gradlew :app:testPlayDebugUnitTest` (Robolectric + Compose test kuralı;
 ana menü, gezinme, Sudoku/Kakuro/Mayın Tarlası/Beş Harf etkileşimleri, Hakkında ve 26 oyun ekranının duman testi).
 CI her itmede motor testleriyle birlikte koşturur; sürüm iş akışı da bunlar geçmeden APK üretmez.
 
 Gereksinimler: JDK 17+, Android SDK (compileSdk 36). Android Studio ile açıp çalıştırabilir veya komut satırından derleyebilirsiniz:
 
 ```bash
-./gradlew :app:assembleDebug        # APK: app/build/outputs/apk/debug/
+./gradlew :app:assembleLibreDebug   # APK: app/build/outputs/apk/libre/debug/ (play çeşidi: assemblePlayDebug)
 ./gradlew :games:engineTests   # games/ altındaki bütün motorlar (liste elle tutulmaz)
 ```
 
 Motor testleri Android SDK gerektirmez. Sürüm `-PzaVersion=X.Y.Z` özelliğiyle geçilir; release iş akışı bunu etiketten türetir (`versionCode` = `major*10000 + minor*100 + patch`).
+
+**İki dağıtım** (`productFlavors`): `play` Google Play içindir ve Play Billing'i içerir; `libre` GitHub ve
+F-Droid içindir, ödeme kodu ve Play kütüphanesi taşımaz, her oyun açıktır. Release iş akışı GitHub'a libre
+APK'yı, Play'e play AAB'yi koyar. Ücretli katmanın kilidi (`platform/Pack.kt`, `src/play/.../BillingPurchases.kt`)
+`-PzaPaywall=true` ile derlenene kadar kapalıdır; kapalıyken play çeşidi de her oyunu açık gösterir.
 
 - minSdk 26 (Android 8.0) · targetSdk 36
 - Kotlin 2.1 · Jetpack Compose (Material 3) · AGP 8.10
@@ -531,4 +536,4 @@ Sürüm çıkarmak: `git tag v0.1.0 && git push origin v0.1.0`
 
 ### English summary
 
-**ZA** is an Android platform for truly ad-free games ("zero ad game play"): no ads, no trackers, no permissions (not even INTERNET), no purchases. It ships 26 games — arcade, puzzle, word and board — in 14 languages, following the phone's language with an in-app picker. Game rules live in deterministic, fully unit-tested pure Kotlin modules under `games/`; the Compose UI lives in `app`. Sound effects are tiny procedurally generated WAVs (`tools/gen_sfx.py`) and can be muted from the hub. Add a game by writing an engine module, a Compose screen, and one `GameEntry` in `GameRegistry`. Build with `./gradlew :app:assembleDebug`, test engines with `./gradlew :games:engineTests`. Licensed under GPL-3.0-or-later; the "ZA Games" name and logo are not part of the license.
+**ZA** is an Android platform for truly ad-free games ("zero ad game play"): no ads, no trackers, no permissions (not even INTERNET), no purchases. It ships 26 games — arcade, puzzle, word and board — in 14 languages, following the phone's language with an in-app picker. Game rules live in deterministic, fully unit-tested pure Kotlin modules under `games/`; the Compose UI lives in `app`. Sound effects are tiny procedurally generated WAVs (`tools/gen_sfx.py`) and can be muted from the hub. Add a game by writing an engine module, a Compose screen, and one `GameEntry` in `GameRegistry`. Build with `./gradlew :app:assembleLibreDebug`, test engines with `./gradlew :games:engineTests`. Licensed under GPL-3.0-or-later; the "ZA Games" name and logo are not part of the license.

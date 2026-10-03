@@ -756,4 +756,18 @@
     <string name="cici_hit_cat">Kissa!</string>
     <string name="cici_hit_ball">Punainen pallo!</string>
     <string name="cici_board_desc_fmt">Avaruus: pisteet %1$d, elämät %2$d, %3$d herkkua</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Avaa</string>
+    <string name="unlock_title">Avaa pelit</string>
+    <string name="unlock_in_pack_fmt">%1$s kuuluu pakettiin %2$s.</string>
+    <string name="unlock_all">Kaikki pelit</string>
+    <string name="unlock_all_desc">Kaikki paketit ja jokainen tuleva peli.</string>
+    <string name="unlock_restore">Palauta ostot</string>
+    <string name="unlock_store_unavailable">Kauppa ei ole käytettävissä</string>
+    <string name="unlock_once_note">Kertaosto. Ei mainoksia, ei tilausta.</string>
+    <string name="pack_word">Sanat</string>
+    <string name="pack_puzzle_board">Logiikka ja Lautapelit</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Seikkailu</string>
 </resources>

@@ -16,6 +16,10 @@ val zaVersionCode: Int = zaVersion.split('.').map { it.toInt() }.let { (major, m
     (major * 10_000 + minor * 100 + patch).coerceAtLeast(1)
 }
 
+// Ücretli katmanın kilidi: Play Console'da ürünler hazır olana kadar kapalı.
+// Açmak için: ./gradlew :app:bundlePlayRelease -PzaPaywall=true
+val zaPaywall: Boolean = (project.findProperty("zaPaywall") as? String)?.toBoolean() ?: false
+
 android {
     namespace = "com.aripd.zagames"
     compileSdk = 36
@@ -43,6 +47,20 @@ android {
         }
     }
 
+    // Aynı kaynaktan iki dağıtım (store/checklist.md, §8):
+    //   play  — Google Play; Play Billing yalnız burada derlenir
+    //   libre — GitHub ve F-Droid; ödeme kodu yok, her oyun açık
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("play") {
+            dimension = "distribution"
+            buildConfigField("boolean", "PAYWALL", zaPaywall.toString())
+        }
+        create("libre") {
+            dimension = "distribution"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -62,6 +80,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     // Play, AAB'yi dile göre böler ve cihaza yalnız kendi dilini indirir.
@@ -131,6 +150,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    "playImplementation"(libs.billing)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     // createComposeRule için ComponentActivity'yi debug manifestine ekler.

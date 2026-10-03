@@ -756,4 +756,18 @@
     <string name="cici_hit_cat">Kat!</string>
     <string name="cici_hit_ball">Rode bal!</string>
     <string name="cici_board_desc_fmt">Ruimte: score %1$d, levens %2$d, %3$d hapjes</string>
+
+    <!-- Ücretli katman: kilit ve paketler -->
+    <string name="unlock">Ontgrendelen</string>
+    <string name="unlock_title">Spellen ontgrendelen</string>
+    <string name="unlock_in_pack_fmt">%1$s hoort bij het pakket %2$s.</string>
+    <string name="unlock_all">Alle spellen</string>
+    <string name="unlock_all_desc">Alle pakketten en elk spel dat nog komt.</string>
+    <string name="unlock_restore">Aankopen herstellen</string>
+    <string name="unlock_store_unavailable">Winkel niet bereikbaar</string>
+    <string name="unlock_once_note">Eenmalige aankoop. Geen advertenties, geen abonnement.</string>
+    <string name="pack_word">Woord</string>
+    <string name="pack_puzzle_board">Puzzel &amp; Bord</string>
+    <string name="pack_arcade">Arcade</string>
+    <string name="pack_adventure">Avontuur</string>
 </resources>
