@@ -114,6 +114,7 @@ kendi paketine girer; "Tümü" sahibi gelecekteki oyunları da alır.
 | [ ] | Console → Para kazanma → Uygulama içi ürünler: yukarıdaki 5 kimliği tek seferlik ürün olarak oluştur, fiyatları gir, etkinleştir | C |
 | [ ] | Lisans testçisi ekle; kapalı test kanalında kilitli derlemeyle satın al, iade et, geri yükle (adımlar aşağıda) | C + A |
 | [ ] | Play çeşidinde manifest `com.android.vending.BILLING` iznini taşır (kullanıcıya sorulmaz): "0 izin" ve "0 satın alma" yazan her yer güncellenmeli (uygulama içi çip, README, site, 14 dilde listeleme, gizlilik sayfası) | A |
+| [ ] | Play Billing'in çektiği datatransport'un INTERNET ve ACCESS_NETWORK_STATE izinleri `src/play/AndroidManifest.xml` ile çıkarıldı (karar 2026-10-03, Cem). Kapalı testte doğrula: satın alma ve geri yükleme çalışıyor, birkaç saat sonra da logcat'te `datatransport` / `JobInfoScheduler` kaynaklı FATAL yok. Çökme varsa iki izni geri al ve telemetriyi listelemede açıkla | C + A |
 | [ ] | IARC "Dijital satın alma: Evet", listeleme "Uygulama içi satın alma içerir" (`icerik-derecelendirme.md`, `data-safety.md`) | C |
 | [ ] | Vitals temiz ve testçi geri bildirimi kapandıysa **1.0** | C karar |
 
@@ -136,7 +137,7 @@ kendi paketine girer; "Tümü" sahibi gelecekteki oyunları da alır.
    fiyatları üretir), her birini **Etkin** yap.
 6. **Lisans testçisi:** Ayarlar → Lisans testi → kendi hesabın. Testçi
    satın almaları gerçek ücret çekmez; "Test kartı, her zaman onaylanır" seçilir.
-7. **Denenecekler:** paket satın al (oyunlar açılmalı, oyun doğrudan başlamalı),
+7. **Denenecekler:** (logcat açıkken) paket satın al (oyunlar açılmalı, oyun doğrudan başlamalı),
    "Tümü" satın al, uygulamayı sil ve yeniden kur → "Satın almaları geri yükle",
    Console'dan iade et → yeniden açılışta kilit geri gelmeli.
 
